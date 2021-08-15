@@ -31,10 +31,10 @@ pipeline {
         archiveArtifacts 'hadolint_lint.txt'
         }
     success {
-        slackSend (color: '#008000', message: "SUCCESSFUL: Job '(${env.BUILD_URL})")
+        slackSend (color: '#008000', message: "SUCCESS: Job '(${env.BUILD_URL})")
         }
     failure {
-        slackSend (color: '#FF0000', message: "FAILED: Job '(${env.BUILD_URL})")
+        slackSend (color: '#FF0000', message: "FAIL: Job '(${env.BUILD_URL})")
         }
     }
 }
