@@ -1,3 +1,5 @@
 ### Description
 
-Jenkins describes pipeline that runs hadolint for Dockerfiles from repo
+There are 2 jenkinsfiles : 
+- Jenkins.build - to build images for Django
+- Jenkins.deploy - to deploy images to the host
