@@ -16,22 +16,6 @@ pipeline {
         branch: "main" 
       }
     }
-    stage ("lint dockerfile") {
-        agent {
-            docker {
-                image 'hadolint/hadolint:latest-debian'
-                reuseNode true
-            }
-        }
-        steps {
-            sh 'hadolint */Dockerfile | tee -a hadolint_lint.txt'
-        }
-        post {
-            always {
-                archiveArtifacts 'hadolint_lint.txt'
-            }
-        }
-    }
     stage('Building images') {
         parallel {
             stage('Building nginx') {
