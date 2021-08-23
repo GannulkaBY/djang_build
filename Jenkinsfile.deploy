@@ -36,7 +36,6 @@ pipeline {
                                 currentBuild.result = "SUCCESS"
                             }
                             else {
-                                def host=params.Server
                                 def folder=params.Folder
                                 def version=params.Version
                                 sh '''./rollback.sh "''' + host + '''" "''' + folder + '''" "''' + version +'''"'''
