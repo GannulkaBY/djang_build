@@ -5,7 +5,7 @@ pipeline {
         }
     }
     options {
-        buildDiscarder(logRotator(numToKeepStr:'5'))
+        buildDiscarder(logRotator(numToKeepStr:'10'))
     }
   stages {
       stage('Cloning repo') {
@@ -36,7 +36,19 @@ pipeline {
                                 currentBuild.result = "SUCCESS"
                             }
                             else {
-                                currentBuild.result = "FAILURE"
+                                def host=params.Server
+                                def folder=params.Folder
+                                def version=params.Version
+                                sh '''./rollback.sh "''' + host + '''" "''' + folder + '''" "''' + version +'''"'''
+                                sh '''curl --write-out %{http_code} --silent --output /dev/null http://"''' + host + '''":80 > commandResult'''
+                                env.status = readFile('commandResult').trim()
+                                sh "echo ${env.status}"
+                                if (env.status == '200') {
+                                    currentBuild.result = "SUCCESS"
+                                }
+                                else {
+                                    currentBuild.result = "FAILURE"
+                                }
                             }
                   }
           
